@@ -36,6 +36,7 @@ install_tema() {
   fi
 
   # Menginstall timeshift dan membuat backup
+  sudo apt install unzip
   sudo apt update
   sudo apt install -y timeshift
   SNAPSHOT_NAME="chiwa_snapshot_$(date +%Y%m%d_%H%M%S)"
