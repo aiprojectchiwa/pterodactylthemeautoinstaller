@@ -10,3 +10,5 @@ bash <(curl -s https://raw.githubusercontent.com/aiprojectchiwa/pterodactyltheme
 ```
 chiwakawaiiiikyaaa><
 ```
+# Silahkan tonton video dibawah untuk detailnya
+https://youtu.be/77vuhyOGBck
