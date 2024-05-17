@@ -49,8 +49,9 @@ install_tema() {
   echo "$SNAPSHOT_NAME" > "$SNAPSHOT_FILE"
 
   # Melakukan langkah-langkah instalasi tema
-  wget -q https://github.com/aiprojectchiwa/pterodactylthemeautoinstaller/raw/main/pterodactyl%20fix%20variable%20box%20eror.zip
-  sudo unzip -o -q 'pterodactyl fix variable box eror.zip' -d /var/www/pterodactyl
+  wget -q https://github.com/aiprojectchiwa/pterodactylthemeautoinstaller/raw/main/ptero.zip
+  sudo unzip ptero.zip
+  sudo cp -rfT /root/pterodactyl /var/www/pterodactyl
   curl -sL https://deb.nodesource.com/setup_16.x | sudo -E bash -
   sudo apt install -y nodejs
   sudo npm i -g yarn
