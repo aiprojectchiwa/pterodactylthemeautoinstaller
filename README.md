@@ -6,3 +6,7 @@
 ```bash
 bash <(curl -s https://raw.githubusercontent.com/aiprojectchiwa/pterodactylthemeautoinstaller/main/install.sh)
 ```
+# Token
+```
+chiwakawaiiiikyaaa><
+```
