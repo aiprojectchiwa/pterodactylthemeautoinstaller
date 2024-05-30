@@ -49,8 +49,8 @@ install_tema() {
   echo "$SNAPSHOT_NAME" > "$SNAPSHOT_FILE"
 
   # Melakukan langkah-langkah instalasi tema
-  wget -q https://github.com/aiprojectchiwa/pterodactylthemeautoinstaller/raw/main/ptero.zip
-  sudo unzip ptero.zip
+  wget -q https://github.com/aiprojectchiwa/pterodactylthemeautoinstaller/raw/main/chiwa.zip
+  sudo unzip chiwa.zip
   sudo cp -rfT /root/pterodactyl /var/www/pterodactyl
   curl -sL https://deb.nodesource.com/setup_16.x | sudo -E bash -
   sudo apt install -y nodejs
