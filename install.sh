@@ -50,8 +50,7 @@ install_tema() {
       THEME_URL="https://github.com/aiprojectchiwa/pterodactylthemeautoinstaller/raw/main/stellaredited.zip"
       ;;
     2)
-      echo "Fungsi untuk menginstall tema Enigma belum tersedia."
-      exit 1
+      THEME_URL="https://github.com/aiprojectchiwa/pterodactylthemeautoinstaller/raw/main/custom_install_enigma.zip" # Ganti dengan URL tema Enigma yang sebenarnya
       ;;
     *)
       echo "Pilihan tidak valid, keluar dari skrip."
@@ -68,9 +67,29 @@ install_tema() {
   # Menyimpan nama snapshot ke file
   echo "$SNAPSHOT_NAME" > "$SNAPSHOT_FILE"
 
-  # Melakukan langkah-langkah instalasi tema Stellar
+  # Memastikan tidak ada file atau direktori bernama pterodactyl sebelum mengekstrak
+  if [ -e /root/pterodactyl ]; then
+    sudo rm -rf /root/pterodactyl
+  fi
+
+  # Mengunduh dan mengekstrak tema
   wget -q "$THEME_URL"
   sudo unzip -o "$(basename "$THEME_URL")"
+
+  if [ "$THEME_CHOICE" -eq 2 ]; then
+    # Menanyakan informasi kepada pengguna untuk tema Enigma
+    read -p "Masukkan link untuk 'LINK_BC_BOT': " LINK_BC_BOT
+    read -p "Masukkan nama untuk 'NAMA_OWNER_PANEL': " NAMA_OWNER_PANEL
+    read -p "Masukkan link untuk 'LINK_GC_INFO': " LINK_GC_INFO
+    read -p "Masukkan link untuk 'LINKTREE_KALIAN': " LINKTREE_KALIAN
+
+    # Mengganti placeholder dengan nilai dari pengguna
+    sudo sed -i "s|LINK_BC_BOT|$LINK_BC_BOT|g" /root/pterodactyl/resources/scripts/components/dashboard/DashboardContainer.tsx
+    sudo sed -i "s|NAMA_OWNER_PANEL|$NAMA_OWNER_PANEL|g" /root/pterodactyl/resources/scripts/components/dashboard/DashboardContainer.tsx
+    sudo sed -i "s|LINK_GC_INFO|$LINK_GC_INFO|g" /root/pterodactyl/resources/scripts/components/dashboard/DashboardContainer.tsx
+    sudo sed -i "s|LINKTREE_KALIAN|$LINKTREE_KALIAN|g" /root/pterodactyl/resources/scripts/components/dashboard/DashboardContainer.tsx
+  fi
+
   sudo cp -rfT /root/pterodactyl /var/www/pterodactyl
   curl -sL https://deb.nodesource.com/setup_16.x | sudo -E bash -
   sudo apt install -y nodejs
