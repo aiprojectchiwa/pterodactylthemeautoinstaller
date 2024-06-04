@@ -12,7 +12,7 @@ bash <(curl -s https://raw.githubusercontent.com/aiprojectchiwa/pterodactyltheme
 ```
 # Token
 ```
-(Untuk saat ini token tidak tersedia,silahkan chat owner untuk mendapatkan token)
+chiwakawaii
 ```
 # Silahkan tonton video dibawah untuk detailnya
 https://youtu.be/77vuhyOGBck
