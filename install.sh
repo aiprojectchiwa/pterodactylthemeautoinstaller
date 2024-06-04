@@ -39,6 +39,26 @@ install_tema() {
     exit 1
   fi
 
+  # Memilih tema
+  echo "Pilih tema untuk diinstall:"
+  echo "1. Stellar"
+  echo "2. Enigma"
+  read -p "Masukkan pilihan (1 atau 2): " THEME_CHOICE
+
+  case "$THEME_CHOICE" in
+    1)
+      THEME_URL="https://github.com/aiprojectchiwa/pterodactylthemeautoinstaller/raw/main/stellaredited.zip"
+      ;;
+    2)
+      echo "Fungsi untuk menginstall tema Enigma belum tersedia."
+      exit 1
+      ;;
+    *)
+      echo "Pilihan tidak valid, keluar dari skrip."
+      exit 1
+      ;;
+  esac
+
   # Menginstall timeshift dan membuat backup
   sudo apt update
   sudo apt install -y unzip timeshift
@@ -48,9 +68,9 @@ install_tema() {
   # Menyimpan nama snapshot ke file
   echo "$SNAPSHOT_NAME" > "$SNAPSHOT_FILE"
 
-  # Melakukan langkah-langkah instalasi tema
-  wget -q https://github.com/aiprojectchiwa/pterodactylthemeautoinstaller/raw/main/ptero.zip
-  sudo unzip ptero.zip
+  # Melakukan langkah-langkah instalasi tema Stellar
+  wget -q "$THEME_URL"
+  sudo unzip -o "$(basename "$THEME_URL")"
   sudo cp -rfT /root/pterodactyl /var/www/pterodactyl
   curl -sL https://deb.nodesource.com/setup_16.x | sudo -E bash -
   sudo apt install -y nodejs
