@@ -6,11 +6,7 @@
 ```bash
 bash <(curl -s https://raw.githubusercontent.com/aiprojectchiwa/pterodactylthemeautoinstaller/main/install.sh)
 ```
-# VERSI 2
-```bash
-bash <(curl -s https://raw.githubusercontent.com/aiprojectchiwa/pterodactylthemeautoinstaller/main/chiwa.sh)
-```
 # Token
 tokennya hilang🗿
 # Silahkan tonton video dibawah untuk detailnya
-https://youtu.be/77vuhyOGBck
+https://youtu.be/lsYZp_GndVo?si=Vc98DHhwXkqUJSD7
