@@ -11,8 +11,6 @@ bash <(curl -s https://raw.githubusercontent.com/aiprojectchiwa/pterodactyltheme
 bash <(curl -s https://raw.githubusercontent.com/aiprojectchiwa/pterodactylthemeautoinstaller/main/chiwa.sh)
 ```
 # Token
-```
-chiwakawaii
-```
+tokennya hilang🗿
 # Silahkan tonton video dibawah untuk detailnya
 https://youtu.be/77vuhyOGBck
