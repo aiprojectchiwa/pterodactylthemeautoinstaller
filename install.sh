@@ -62,7 +62,7 @@ install_tema() {
       THEME_URL="https://github.com/aiprojectchiwa/pterodactylthemeautoinstaller/raw/main/stellaredited.zip"
       ;;
     2)
-      THEME_URL="https://github.com/aiprojectchiwa/pterodactylthemeautoinstaller/raw/main/custom_install_enigma.zip" # Ganti dengan URL tema Enigma yang sebenarnya
+      THEME_URL="https://github.com/aiprojectchiwa/pterodactylthemeautoinstaller/raw/main/custom_install_enigma.zip"
       ;;
     *)
       echo "Pilihan tidak valid, keluar dari skrip."
