@@ -50,7 +50,7 @@ install_tema() {
       THEME_URL="https://github.com/aiprojectchiwa/pterodactylthemeautoinstaller/raw/main/stellaredited.zip"
       ;;
     2)
-      THEME_URL="https://github.com/aiprojectchiwa/pterodactylthemeautoinstaller/raw/main/custom_install_enigma.zip" # Ganti dengan URL tema Enigma yang sebenarnya
+      THEME_URL="https://example.com/enigma_theme.zip" # Ganti dengan URL tema Enigma yang sebenarnya
       ;;
     *)
       echo "Pilihan tidak valid, keluar dari skrip."
@@ -58,14 +58,17 @@ install_tema() {
       ;;
   esac
 
-  # Menginstall timeshift dan membuat backup
-  sudo apt update
-  sudo apt install -y unzip timeshift
-  SNAPSHOT_NAME="chiwa_snapshot_$(date +%Y%m%d_%H%M%S)"
-  sudo timeshift --create --comments "Backup sebelum instalasi tema" --tags D --snapshot-name "$SNAPSHOT_NAME"
+  # Meminta konfirmasi untuk membuat snapshot Timeshift
+  read -p "Apakah Anda ingin membuat snapshot Timeshift untuk memungkinkan uninstall di kemudian hari? (y/n): " CREATE_SNAPSHOT
+  if [ "$CREATE_SNAPSHOT" == "y" ]; then
+    sudo apt update
+    sudo apt install -y timeshift
+    SNAPSHOT_NAME="chiwa_snapshot_$(date +%Y%m%d_%H%M%S)"
+    sudo timeshift --create --comments "Backup sebelum instalasi tema" --tags D --snapshot-name "$SNAPSHOT_NAME"
 
-  # Menyimpan nama snapshot ke file
-  echo "$SNAPSHOT_NAME" > "$SNAPSHOT_FILE"
+    # Menyimpan nama snapshot ke file
+    echo "$SNAPSHOT_NAME" > "$SNAPSHOT_FILE"
+  fi
 
   # Memastikan tidak ada file atau direktori bernama pterodactyl sebelum mengekstrak
   if [ -e /root/pterodactyl ]; then
@@ -108,7 +111,7 @@ install_tema() {
 # Fungsi untuk uninstalasi tema
 uninstall_tema() {
   if [ ! -f "$SNAPSHOT_FILE" ]; then
-    echo "Anda belum menginstall tema."
+    echo "Anda belum menginstall tema atau tidak membuat snapshot."
     exit 1
   fi
 
