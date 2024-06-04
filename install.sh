@@ -33,7 +33,7 @@ YELLOW='\033[0;33m'
 NC='\033[0m' # No Color
 
 # Tampilan awal
-echo -e "${YELLOW}######################################################################################"
+echo -e "######################################################################################"
 echo -e "#                                                                                    #"
 echo -e "# Project 'pterodactyl-theme-installer'                                              #"
 echo -e "#                                                                                    #"
@@ -55,7 +55,7 @@ echo -e "#                                                                      
 echo -e "# This script is not associated with the official Pterodactyl Project.               #"
 echo -e "# https://github.com/aiprojectchiwa/pterodactylthemeautoinstaller                    #"
 echo -e "#                                                                                    #"
-echo -e "######################################################################################${NC}"
+echo -e "######################################################################################"
 
 # Install jq
 sudo apt update
