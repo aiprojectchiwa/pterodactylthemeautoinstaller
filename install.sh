@@ -39,6 +39,18 @@ install_tema() {
     exit 1
   fi
 
+  # Meminta konfirmasi untuk membuat snapshot Timeshift
+  read -p "Apakah Anda ingin membuat snapshot Timeshift untuk memungkinkan uninstall di kemudian hari? (y/n): " CREATE_SNAPSHOT
+  if [ "$CREATE_SNAPSHOT" == "y" ]; then
+    sudo apt update
+    sudo apt install -y timeshift
+    SNAPSHOT_NAME="chiwa_snapshot_$(date +%Y%m%d_%H%M%S)"
+    sudo timeshift --create --comments "Backup sebelum instalasi tema" --tags D --snapshot-name "$SNAPSHOT_NAME"
+
+    # Menyimpan nama snapshot ke file
+    echo "$SNAPSHOT_NAME" > "$SNAPSHOT_FILE"
+  fi
+
   # Memilih tema
   echo "Pilih tema untuk diinstall:"
   echo "1. Stellar"
@@ -57,18 +69,6 @@ install_tema() {
       exit 1
       ;;
   esac
-
-  # Meminta konfirmasi untuk membuat snapshot Timeshift
-  read -p "Apakah Anda ingin membuat snapshot Timeshift untuk memungkinkan uninstall di kemudian hari? (y/n): " CREATE_SNAPSHOT
-  if [ "$CREATE_SNAPSHOT" == "y" ]; then
-    sudo apt update
-    sudo apt install -y timeshift
-    SNAPSHOT_NAME="chiwa_snapshot_$(date +%Y%m%d_%H%M%S)"
-    sudo timeshift --create --comments "Backup sebelum instalasi tema" --tags D --snapshot-name "$SNAPSHOT_NAME"
-
-    # Menyimpan nama snapshot ke file
-    echo "$SNAPSHOT_NAME" > "$SNAPSHOT_FILE"
-  fi
 
   # Memastikan tidak ada file atau direktori bernama pterodactyl sebelum mengekstrak
   if [ -e /root/pterodactyl ]; then
