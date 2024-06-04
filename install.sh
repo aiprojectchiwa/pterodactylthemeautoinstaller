@@ -1,6 +1,36 @@
 #!/bin/bash
 
+######################################################################################
+#                                                                                    #
+# Project 'pterodactyl-theme-installer'                                              #
+#                                                                                    #
+# Copyright (C) 2023 - 2024, @akane_chiwa,    akane_chiwa@gmail.com                  #
+#                                                                                    #
+#   This program is free software: you can redistribute it and/or modify             #
+#   it under the terms of the GNU General Public License as published by             #
+#   the Free Software Foundation, either version 3 of the License, or                #
+#   (at your option) any later version.                                              #
+#                                                                                    #
+#   This program is distributed in the hope that it will be useful,                  #
+#   but WITHOUT ANY WARRANTY; without even the implied warranty of                   #
+#   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the                    #
+#   GNU General Public License for more details.                                     #
+#                                                                                    #
+#   You should have received a copy of the GNU General Public License                #
+#   along with this program.  If not, see <https://www.gnu.org/licenses/>.           #
+#                                                                                    #
+# This script is not associated with the official Pterodactyl Project.               #
+# https://github.com/aiprojectchiwa/pterodactylthemeautoinstaller                    #
+#                                                                                    #
+######################################################################################
+
 set -e
+
+# Warna
+RED='\033[0;31m'
+GREEN='\033[0;32m'
+YELLOW='\033[0;33m'
+NC='\033[0m' # No Color
 
 # Install jq
 sudo apt update
@@ -13,21 +43,23 @@ TOKEN_URL="https://getpantry.cloud/apiv1/pantry/c4a7d113-85fe-48c7-a60a-6949d946
 TOKEN=$(curl -s "$TOKEN_URL" | jq -r .token)
 
 # Meminta pengguna untuk memasukkan token
-read -p "Tokennya apaa hayyooooo~~~~~: " USER_TOKEN
+echo -e "${YELLOW}Tokennya apaa hayyooooo~~~~~: ${NC}"
+read USER_TOKEN
 
 # Memverifikasi token
 if [ "$USER_TOKEN" != "$TOKEN" ]; then
-  echo "Yahhhh,tokennya salaahhh, sayonaraa~~~~~"
+  echo -e "${RED}Yahhhh,tokennya salaahhh, sayonaraa~~~~~${NC}"
   exit 1
 else
-  echo "Yeyyy tokennya bener >_< Irasheimase~~~~~"
+  echo -e "${GREEN}Yeyyy tokennya bener >_< Irasheimase~~~~~${NC}"
 fi
 
 # Menampilkan menu
-echo "Pilih opsi:"
+echo -e "${YELLOW}Pilih opsi:${NC}"
 echo "1. Install tema"
 echo "2. Uninstall tema"
-read -p "Masukkan pilihan (1 atau 2): " MENU_CHOICE
+echo -e "${YELLOW}Masukkan pilihan (1 atau 2): ${NC}"
+read MENU_CHOICE
 
 # File untuk menyimpan nama snapshot
 SNAPSHOT_FILE="/var/tmp/chiwa_snapshot_name"
@@ -35,27 +67,31 @@ SNAPSHOT_FILE="/var/tmp/chiwa_snapshot_name"
 # Fungsi untuk instalasi tema
 install_tema() {
   if [ ! -d /var/www/pterodactyl ]; then
-    echo "Silahkan install panel terlebih dahulu."
+    echo -e "${RED}Silahkan install panel terlebih dahulu.${NC}"
     exit 1
   fi
 
   # Meminta konfirmasi untuk membuat snapshot Timeshift
-  read -p "Apakah Anda ingin membuat snapshot Timeshift untuk memungkinkan uninstall di kemudian hari? (y/n): " CREATE_SNAPSHOT
+  echo -e "${YELLOW}Apakah Anda ingin membuat snapshot Timeshift untuk memungkinkan uninstall di kemudian hari? (y/n): ${NC}"
+  read CREATE_SNAPSHOT
   if [ "$CREATE_SNAPSHOT" == "y" ]; then
     sudo apt update
     sudo apt install -y timeshift
-    SNAPSHOT_NAME="chiwa_snapshot_$(date +%Y%m%d_%H%M%S)"
-    sudo timeshift --create --comments "Backup sebelum instalasi tema" --tags D --snapshot-name "$SNAPSHOT_NAME"
 
-    # Menyimpan nama snapshot ke file
-    echo "$SNAPSHOT_NAME" > "$SNAPSHOT_FILE"
+    # Membuat snapshot
+    sudo timeshift --create --comments "Backup sebelum instalasi tema" --tags D
+
+    # Mendapatkan nomor snapshot terbaru
+    SNAPSHOT_NUM=$(sudo timeshift --list | grep -E "Backup sebelum instalasi tema" | head -1 | awk '{print $1}')
+    echo "$SNAPSHOT_NUM" > "$SNAPSHOT_FILE"
   fi
 
   # Memilih tema
-  echo "Pilih tema untuk diinstall:"
+  echo -e "${YELLOW}Pilih tema untuk diinstall:${NC}"
   echo "1. Stellar"
   echo "2. Enigma"
-  read -p "Masukkan pilihan (1 atau 2): " THEME_CHOICE
+  echo -e "${YELLOW}Masukkan pilihan (1 atau 2): ${NC}"
+  read THEME_CHOICE
 
   case "$THEME_CHOICE" in
     1)
@@ -65,7 +101,7 @@ install_tema() {
       THEME_URL="https://github.com/aiprojectchiwa/pterodactylthemeautoinstaller/raw/main/custom_install_enigma.zip"
       ;;
     *)
-      echo "Pilihan tidak valid, keluar dari skrip."
+      echo -e "${RED}Pilihan tidak valid, keluar dari skrip.${NC}"
       exit 1
       ;;
   esac
@@ -81,10 +117,14 @@ install_tema() {
 
   if [ "$THEME_CHOICE" -eq 2 ]; then
     # Menanyakan informasi kepada pengguna untuk tema Enigma
-    read -p "Masukkan link untuk 'LINK_BC_BOT': " LINK_BC_BOT
-    read -p "Masukkan nama untuk 'NAMA_OWNER_PANEL': " NAMA_OWNER_PANEL
-    read -p "Masukkan link untuk 'LINK_GC_INFO': " LINK_GC_INFO
-    read -p "Masukkan link untuk 'LINKTREE_KALIAN': " LINKTREE_KALIAN
+    echo -e "${YELLOW}Masukkan link untuk 'LINK_BC_BOT': ${NC}"
+    read LINK_BC_BOT
+    echo -e "${YELLOW}Masukkan nama untuk 'NAMA_OWNER_PANEL': ${NC}"
+    read NAMA_OWNER_PANEL
+    echo -e "${YELLOW}Masukkan link untuk 'LINK_GC_INFO': ${NC}"
+    read LINK_GC_INFO
+    echo -e "${YELLOW}Masukkan link untuk 'LINKTREE_KALIAN': ${NC}"
+    read LINKTREE_KALIAN
 
     # Mengganti placeholder dengan nilai dari pengguna
     sudo sed -i "s|LINK_BC_BOT|$LINK_BC_BOT|g" /root/pterodactyl/resources/scripts/components/dashboard/DashboardContainer.tsx
@@ -104,23 +144,23 @@ install_tema() {
   yarn build:production
   php artisan view:clear
 
-  echo "Tema telah terinstall, makaciih udah pake script chiwa ><"
+  echo -e "${GREEN}Tema telah terinstall, makaciih udah pake script chiwa ><${NC}"
   exit 0
 }
 
 # Fungsi untuk uninstalasi tema
 uninstall_tema() {
   if [ ! -f "$SNAPSHOT_FILE" ]; then
-    echo "Anda belum menginstall tema atau tidak membuat snapshot."
+    echo -e "${RED}Anda belum menginstall tema atau tidak membuat snapshot.${NC}"
     exit 1
   fi
 
-  SNAPSHOT_NAME=$(cat "$SNAPSHOT_FILE")
+  SNAPSHOT_NUM=$(cat "$SNAPSHOT_FILE")
 
   # Merestore snapshot
-  sudo timeshift --restore --snapshot "$SNAPSHOT_NAME"
+  sudo timeshift --restore --snapshot "$SNAPSHOT_NUM"
 
-  echo "Tema telah diuninstall."
+  echo -e "${GREEN}Tema telah diuninstall.${NC}"
   exit 0
 }
 
@@ -133,7 +173,7 @@ case "$MENU_CHOICE" in
     uninstall_tema
     ;;
   *)
-    echo "Pilihan tidak valid, keluar dari skrip."
+    echo -e "${RED}Pilihan tidak valid, keluar dari skrip.${NC}"
     exit 1
     ;;
 esac
