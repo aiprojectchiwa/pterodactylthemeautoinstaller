@@ -4,7 +4,7 @@
 
 # Salin command dibawah untuk menginstall tema secara otomatis(V1)
 ```bash
-bash <(curl -s https://themesinstaller.chiwa.my.id/)
+bash <(curl -s https://raw.githubusercontent.com/aiprojectchiwa/pterodactylthemeautoinstaller/main/install.sh)
 ```
 # Token
 tokennya hilang🗿
