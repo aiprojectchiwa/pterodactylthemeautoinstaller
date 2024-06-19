@@ -75,7 +75,7 @@ echo -e "${YELLOW}Tokennya apaa hayyooooo~~~~~: ${NC}"
 read USER_TOKEN
 
 # Memverifikasi token
-if [ "$USER_TOKEN" != "$chiw" ]; then
+if [ "$USER_TOKEN" = "yudastore" ]; then
   echo -e "${RED}Yahhhh,tokennya salaahhh, papayyy~~~~~${NC}"
   exit 1
 else
